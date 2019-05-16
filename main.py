@@ -7,7 +7,7 @@ import csv
 FILENAME = "articleLinks.csv"
 
 def writeToFile(arr = [], fn = FILENAME):
-    with open(FILENAME, 'w', newline='') as writeFile:
+    with open(fn, 'w', newline='') as writeFile:
         writer = csv.writer(writeFile)
         writer.writerow(["title","category", "link"])
         for row in arr:
@@ -24,15 +24,16 @@ def readFromFile(fn = FILENAME):
                 continue
         return l
 
-for pageNo in trange(2, 200):
+for pageNo in trange(2, 100):
 
     links = []
-    currentPageUrl = "https://timesofindia.indiatimes.com/india/"+str(pageNo)
+    currentPageUrl = "https://timesofindia.indiatimes.com/world/"+str(pageNo)
 
     r = requests.get(currentPageUrl)
     soup = BeautifulSoup(r.content, features="html.parser")
 
     selectedLinks = soup.select("a[href*=cms]")
+
 
     for i in trange(len(selectedLinks)):
 
@@ -46,12 +47,12 @@ for pageNo in trange(2, 200):
             testLink = selectedLinks[i]['href']
 
         try:
-            request = requests.get(testLink)
+
             st1 = testLink.split('/')
             title = st1[-3]
             title = ' '.join([x.capitalize() for x in title.split('-')])
             category = st1[3]
-
+            request = requests.get(testLink)
             if request.status_code == 200:
                 links.append([title, category, testLink])
                 # print("add:"+testLink)

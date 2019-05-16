@@ -12,8 +12,8 @@ def readFromFile(fn = FILENAME):
        print(len(linkList))
        print("\n")
        print(type(linkList))
-       print("\n")
-       print(linkList)
+       # print("\n")
+       # print(linkList)
 
 # for i in tqdm(range(len(linkList[:1]))):
 #        print(linkList[i])
